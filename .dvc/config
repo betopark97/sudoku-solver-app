@@ -1,2 +1,5 @@
 [core]
     autostage = false
+['remote "origin"']
+    url = s3://dvc
+    endpointurl = https://dagshub.com/betopark97/sudoku-solver-app.s3
