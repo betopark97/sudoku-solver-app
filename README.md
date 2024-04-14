@@ -10,7 +10,7 @@ The purpose of this app is to have an interface where a user can upload an image
 streamlit
 
 # Achnowledgements
-Datasets:
+Datasets:  
 `Digit Recognition`  
 > https://www.kaggle.com/datasets/pintowar/numerical-images
 MNIST database by: 
