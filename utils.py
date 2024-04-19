@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 
 # Preprocessing the Sudoku Grid
-def preprocess_grid(image:np.array) -> np.array:
+def preprocess_grid(image:np.array, resize_dim:tuple=(450,450)) -> np.array:
     """
     A function that preprocesses an image by converting it to grayscale, resizing it, and applying Gaussian blur.
     
@@ -15,7 +15,6 @@ def preprocess_grid(image:np.array) -> np.array:
     Returns:
         np.array: The preprocessed image as a NumPy array.
     """
-    resize_dim = (450,450)
     height = resize_dim[0]
     width = resize_dim[1]
     gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -160,7 +159,7 @@ def plot_sudoku_boxes(box_images:list) -> None:
 
 
 # Preprocess for CNN
-def image_to_pixels(image:np.array) -> np.array:
+def image_to_pixels(image:np.array, resize_dim:tuple=(32,32)) -> np.array:
     """
     A function that converts an image to grayscale, equalizes it, resizes it, and returns the processed image as a NumPy array.
     Parameters:
@@ -168,7 +167,6 @@ def image_to_pixels(image:np.array) -> np.array:
     Returns:
         np.array: The processed image as a NumPy array.
     """
-    resize_dim = (32, 32)
     if len(image.shape) >= 3:
         gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         equalized_image = cv2.equalizeHist(gray_image)
@@ -179,7 +177,7 @@ def image_to_pixels(image:np.array) -> np.array:
         image = cv2.resize(equalized_image, resize_dim)
     return image
 
-def preprocess_pixels(image:np.array) -> np.array:
+def preprocess_pixels(image:np.array, resize_dim:tuple=(32,32)) -> np.array:
     """
     Resizes and normalizes an image and returns the processed image as a NumPy array.
     Parameters:
@@ -188,7 +186,6 @@ def preprocess_pixels(image:np.array) -> np.array:
     Returns:
         np.array: The preprocessed image as a NumPy array.
     """
-    resize_dim = (32,32)
     normalized_image = tf.keras.utils.normalize(image, axis=1)
     preprocessed_image = np.array(normalized_image).reshape(-1, resize_dim[0], resize_dim[1], 1)
     return preprocessed_image
@@ -208,7 +205,7 @@ def predict_sudoku_grid(box_images:list, model:tf.keras.Model, verbose:int=0) ->
 
     for index, box in enumerate(box_images):
         box = np.array(box)
-        box = cv2.resize(box, (32,32))
+        box = cv2.resize(box, (28,28))
         box = preprocess_pixels(box)
 
         prediction = model.predict(box, verbose=0)
