@@ -156,10 +156,8 @@ def plot_sudoku_boxes(box_images:list) -> None:
     plt.tight_layout()
     plt.show()
 
-
-
 # Preprocess for CNN
-def image_to_pixels(image:np.array, resize_dim:tuple=(32,32)) -> np.array:
+def image_to_pixels(image:np.array, resize_dim:tuple=(28,28)) -> np.array:
     """
     A function that converts an image to grayscale, equalizes it, resizes it, and returns the processed image as a NumPy array.
     Parameters:
@@ -177,7 +175,7 @@ def image_to_pixels(image:np.array, resize_dim:tuple=(32,32)) -> np.array:
         image = cv2.resize(equalized_image, resize_dim)
     return image
 
-def preprocess_pixels(image:np.array, resize_dim:tuple=(32,32)) -> np.array:
+def preprocess_pixels(image:np.array, resize_dim:tuple=(28,28)) -> np.array:
     """
     Resizes and normalizes an image and returns the processed image as a NumPy array.
     Parameters:
